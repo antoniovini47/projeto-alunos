@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "open index.html && node server.js",
+    "server": "node server.js",
+    "site": "open index.html"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  }
+}
