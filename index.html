@@ -24,9 +24,19 @@
             const response = await fetch('http://localhost:3000/alunos');
             const alunos = await response.json();
             const alunosList = document.getElementById('alunosList');
+            alunosList.innerHTML = ''; // Clear the list before adding new items
             alunos.forEach(aluno => {
                 var entry = document.createElement('li');
-                entry.appendChild(document.createTextNode(`Aluno: ${aluno.nome}, Nota: ${aluno.nota}`));
+
+                var deleteButton = document.createElement('button');
+                deleteButton.innerText = 'Deletar';
+                deleteButton.className = 'delete-button';
+                deleteButton.onclick = () => deleteAluno(aluno.id);
+                entry.appendChild(deleteButton);
+
+                var dataAluno = document.createTextNode(`Aluno: ${aluno.nome}, Nota: ${aluno.nota}`);
+                dataAluno.className = 'aluno-data';
+                entry.appendChild(dataAluno);
                 alunosList.appendChild(entry);
             });
         }
@@ -35,25 +45,31 @@
             var nome = document.getElementById('nome').value;
             var nota = document.getElementById('nota').value;
             if (nome === '' || nota === '') {
-                alert('Preencha todos os campos!');
+                alert('Por favor, preencha todos os campos.');
                 return;
             }
             const response = await fetch('http://localhost:3000/aluno', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nome, nota }),
+                body: JSON.stringify({ nome, nota })
             });
-            const newAluno = await response.json();
-            var alunosList = document.getElementById('alunosList');
-            var entry = document.createElement('li');
-            entry.appendChild(document.createTextNode(`Aluno: ${newAluno.nome}, Nota: ${newAluno.nota}`));
-            alunosList.appendChild(entry);
+            if (response.ok) {
+                fetchAlunos();
+            }
         }
 
-        fetchAlunos();
+        async function deleteAluno(id) {
+            const response = await fetch(`http://localhost:3000/aluno/${id}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                fetchAlunos();
+            }
+        }
+
+        // Fetch alunos when the page loads
+        window.onload = fetchAlunos;
     </script>
 </body>
-
-</html>

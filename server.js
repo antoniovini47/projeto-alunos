@@ -44,6 +44,17 @@ app.post('/aluno', (req, res) => {
   });
 });
 
+app.delete('/aluno/:id', (req, res) => {
+  const id = req.params.id;
+  db.run(`DELETE FROM agenda_aluno WHERE id = ?`, id, function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+    res.json({ id });
+  });
+});
+
+
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });

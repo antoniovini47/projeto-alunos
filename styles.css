@@ -44,3 +44,19 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+
+
+.delete-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.delete-button:hover {
+    background-color: #ff1a1a;
+}
